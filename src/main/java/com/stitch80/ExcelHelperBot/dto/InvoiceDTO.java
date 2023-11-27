@@ -24,17 +24,11 @@ public class InvoiceDTO {
     private InvoiceStatus invoiceStatus = InvoiceStatus.CREATION;
 
     public boolean isCompleted() {
-        if (
-                year != null && !year.isBlank()
-                        && invNo != null && !invNo.isBlank()
-                        && invDate != null && !invDate.isBlank()
-                        && customerName != null && !customerName.isBlank()
-                        && amount != 0
-        ) {
-            return true;
-        }
-        return false;
-
+        return year != null && !year.isBlank()
+                && invNo != null && !invNo.isBlank()
+                && invDate != null && !invDate.isBlank()
+                && customerName != null && !customerName.isBlank()
+                && amount != 0;
     }
 
     public void checkIfInvoiceIsCompleted() {
@@ -53,12 +47,12 @@ public class InvoiceDTO {
         } else if (getYear() != null && !getYear().isBlank()) {
             output.append("Invoice number: " + getYear() + "/ need to fill Invoice number\n");
         } else if (getInvNo() != null && !getInvNo().isBlank()) {
-            output.append("Invoice number: need to fill year /" + getInvNo() + "\n");
+            output.append("Invoice number: need to fill invoice date /" + getInvNo() + "\n");
         }
         if (getInvDate() != null && !getInvDate().isBlank()) {
             output.append("Invoice date: " + getInvDate() + "\n");
         } else {
-            output.append("Invoice date: need to fill year and Invoice date\n");
+            output.append("Invoice date: need to fill invoice date\n");
         }
         if (getCustomerName() != null && !getCustomerName().isBlank()) {
             output.append("Customer name: " + getCustomerName() + "\n");
@@ -68,7 +62,7 @@ public class InvoiceDTO {
         if (getAmount() != 0) {
             output.append("Amount: " + getAmount() + "\n");
         } else {
-            output.append("Amount: need to fill amount\n");
+            output.append("Amount: need to fill invoice amount\n");
         }
 
         return output.toString();

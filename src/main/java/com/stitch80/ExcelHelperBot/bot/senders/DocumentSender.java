@@ -49,6 +49,7 @@ public class DocumentSender {
         sendDocumentRequest.setCaption(fileName);
         try {
             excelHelperBot.execute(sendDocumentRequest);
+            file.delete();
         } catch (TelegramApiException e) {
             throw new RuntimeException(e);
         }

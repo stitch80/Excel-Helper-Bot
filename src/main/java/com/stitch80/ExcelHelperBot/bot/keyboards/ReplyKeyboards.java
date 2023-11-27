@@ -14,7 +14,7 @@ public class ReplyKeyboards {
 
     private HashMap<String, ReplyKeyboardMarkup> keyboards;
 
-    public ReplyKeyboards(HashMap<String, ReplyKeyboardMarkup> keyboards) {
+    public ReplyKeyboards() {
         this.keyboards = new HashMap<>();
         constructMainMenuKeyboard();
         constructInvoiceDetailsKeyboard();
@@ -36,10 +36,10 @@ public class ReplyKeyboards {
 
     private void constructInvoiceDetailsKeyboard() {
         List<KeyboardButton> firstRow = new ArrayList<>();
-        KeyboardButton setYear = KeyboardButton.builder().text("Year").build();
+//        KeyboardButton setYear = KeyboardButton.builder().text("Year").build();
         KeyboardButton setInvoiceNumber = KeyboardButton.builder().text("Invoice Number").build();
         KeyboardButton setInvoiceDate = KeyboardButton.builder().text("Invoice Date").build();
-        firstRow.add(setYear);
+//        firstRow.add(setYear);
         firstRow.add(setInvoiceNumber);
         firstRow.add(setInvoiceDate);
 
@@ -58,6 +58,7 @@ public class ReplyKeyboards {
                 .keyboardRow(new KeyboardRow(secondRow))
                 .keyboardRow(new KeyboardRow(thirdRow))
                 .resizeKeyboard(true)
+//                .isPersistent(true)
                 .build();
 
         keyboards.put("invdetails", invoiceDetailsKeyboard);

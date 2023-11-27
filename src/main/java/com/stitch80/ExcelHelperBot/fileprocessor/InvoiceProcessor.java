@@ -14,7 +14,6 @@ public class InvoiceProcessor {
     private final static CellAddress CUSTOMER_NAME = new CellAddress(9, 2);
     private final static CellAddress AMOUNT1 = new CellAddress(15, 5);
     private final static CellAddress AMOUNT2 = new CellAddress(20, 5);
-    private final static CellAddress AMOUNT3 = new CellAddress(22, 5);
     private XSSFWorkbook currentWorkbook;
 
 
