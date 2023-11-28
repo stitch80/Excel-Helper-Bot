@@ -4,6 +4,7 @@ import com.stitch80.ExcelHelperBot.bot.ExcelHelperBot;
 import com.stitch80.ExcelHelperBot.dto.InvoiceDTO;
 import com.stitch80.ExcelHelperBot.fileprocessor.InvoiceProcessor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendDocument;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
@@ -16,9 +17,17 @@ import java.time.LocalDate;
 @Component
 public class DocumentSender {
 
-    public void sendInvoiceDocument(User user, InvoiceDTO invoiceDTO, ExcelHelperBot excelHelperBot) {
 
-        String filePath = "/Users/stitch80/IdeaProjects/ExcelHelperBot/src/main/resources/";
+    private final String filePath;
+
+    public DocumentSender(@Value("${file.path}") String filePath) {
+        this.filePath = filePath;
+    }
+
+    public void sendInvoiceDocument(
+            User user, InvoiceDTO invoiceDTO, ExcelHelperBot excelHelperBot) {
+
+//        String filePath = "/usr/local/bin/";
         XSSFWorkbook invoiceDocument = getModifiedExcelWorkbook(
                 filePath,
                 invoiceDTO.getYear(), invoiceDTO.getInvNo(),
@@ -81,7 +90,6 @@ public class DocumentSender {
         );
 
         InvoiceProcessor invoiceProcessor = new InvoiceProcessor(workbook);
-        System.out.println(date);
         return invoiceProcessor.createNewInvoice(
                 invNumber,
                 date,

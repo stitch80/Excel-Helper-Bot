@@ -82,7 +82,6 @@ public class MessageController {
                 break;
             case "Get Invoice":
                 if (invoiceDTO.isCompleted()) {
-                    System.out.println(invoiceDTO);
                     documentSender.sendInvoiceDocument(user, invoiceDTO, excelHelperBot);
                     replyKeyboardSender.sendMainMenu(user, excelHelperBot);
                 } else {

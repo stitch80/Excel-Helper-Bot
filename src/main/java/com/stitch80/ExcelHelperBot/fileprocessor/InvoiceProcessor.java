@@ -38,8 +38,6 @@ public class InvoiceProcessor {
         currentWorkbook.setForceFormulaRecalculation(true);
 
         XSSFSheet sheet = currentWorkbook.getSheet(sheetName);
-        System.out.println(sheet.getLastRowNum() + " rows");
-        System.out.println(sheet.getRow(0).getLastCellNum());
         //set invoice number
         XSSFCell cell = sheet.getRow(INV_NO.getRow()).getCell(INV_NO.getColumn());
         cell.setCellValue(invNo);
