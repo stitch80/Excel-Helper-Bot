@@ -26,12 +26,10 @@ public class MonthMenuKeyboard {
                 .text("⬅️ Previous")
                 .callbackData(CONTROL_MONTH + localDate.minusMonths(1))
                 .build();
-//        System.out.println(localDate.minusMonths(1));
         InlineKeyboardButton moveRight = InlineKeyboardButton.builder()
                 .text("Next ➡️")
                 .callbackData(CONTROL_MONTH + localDate.plusMonths(1))
                 .build();
-//        System.out.println(localDate.plusMonths(1));
         InlineKeyboardButton currentMonth = InlineKeyboardButton.builder()
                 .text(localDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.US) +
                         " " + localDate.getYear())

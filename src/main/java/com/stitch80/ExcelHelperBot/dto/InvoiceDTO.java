@@ -43,24 +43,44 @@ public class InvoiceDTO {
         StringBuilder output = new StringBuilder("Invoice Data:\n");
         if (getYear() != null && !getYear().isBlank()
                 && getInvNo() != null && !getInvNo().isBlank()) {
-            output.append("Invoice number: " + getYear() + "/" + getInvNo() + "\n");
+            output
+                    .append("Invoice number: ")
+                    .append(getYear())
+                    .append("/")
+                    .append(getInvNo())
+                    .append("\n");
         } else if (getYear() != null && !getYear().isBlank()) {
-            output.append("Invoice number: " + getYear() + "/ need to fill Invoice number\n");
+            output
+                    .append("Invoice number: ")
+                    .append(getYear())
+                    .append("/ need to fill Invoice number\n");
         } else if (getInvNo() != null && !getInvNo().isBlank()) {
-            output.append("Invoice number: need to fill invoice date /" + getInvNo() + "\n");
+            output
+                    .append("Invoice number: need to fill invoice date /")
+                    .append(getInvNo())
+                    .append("\n");
         }
         if (getInvDate() != null && !getInvDate().isBlank()) {
-            output.append("Invoice date: " + getInvDate() + "\n");
+            output
+                    .append("Invoice date: ")
+                    .append(getInvDate())
+                    .append("\n");
         } else {
             output.append("Invoice date: need to fill invoice date\n");
         }
         if (getCustomerName() != null && !getCustomerName().isBlank()) {
-            output.append("Customer name: " + getCustomerName() + "\n");
+            output
+                    .append("Customer name: ")
+                    .append(getCustomerName())
+                    .append("\n");
         } else {
             output.append("Customer name: need to fill customer name\n");
         }
         if (getAmount() != 0) {
-            output.append("Amount: " + getAmount() + "\n");
+            output
+                    .append("Amount: ")
+                    .append(getAmount())
+                    .append("\n");
         } else {
             output.append("Amount: need to fill invoice amount\n");
         }
@@ -91,6 +111,7 @@ public class InvoiceDTO {
                 '}';
     }
 
+    @Getter
     private enum InvoiceStatus {
         CREATION("Creation"),
         YEAR("Year of invoice"),
@@ -104,10 +125,6 @@ public class InvoiceDTO {
 
         InvoiceStatus(String status) {
             this.setStatus(status);
-        }
-
-        public String getStatus() {
-            return status;
         }
 
         public void setStatus(String status) {

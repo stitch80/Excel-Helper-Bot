@@ -28,13 +28,11 @@ public class InvoiceDetailMenuKeyboard {
         KeyboardButton getInvoice = KeyboardButton.builder().text("Get Invoice").build();
         thirdRow.add(getInvoice);
 
-        ReplyKeyboardMarkup invoiceDetailsKeyboard = ReplyKeyboardMarkup.builder()
+        return ReplyKeyboardMarkup.builder()
                 .keyboardRow(new KeyboardRow(firstRow))
                 .keyboardRow(new KeyboardRow(secondRow))
                 .keyboardRow(new KeyboardRow(thirdRow))
                 .resizeKeyboard(true)
                 .build();
-
-        return invoiceDetailsKeyboard;
     }
 }

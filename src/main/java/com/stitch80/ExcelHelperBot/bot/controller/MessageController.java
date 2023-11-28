@@ -19,11 +19,11 @@ import java.time.LocalDate;
 public class MessageController {
 
 
-    private InvoiceDTO invoiceDTO;
-    private TextSender textSender;
-    private DocumentSender documentSender;
-    private ReplyKeyboardSender replyKeyboardSender;
-    private InlineKeyboardSender inlineKeyboardSender;
+    private final InvoiceDTO invoiceDTO;
+    private final TextSender textSender;
+    private final DocumentSender documentSender;
+    private final ReplyKeyboardSender replyKeyboardSender;
+    private final InlineKeyboardSender inlineKeyboardSender;
 
     public MessageController(
             InvoiceDTO invoiceDTO,
@@ -42,29 +42,16 @@ public class MessageController {
         Message message = update.getMessage();
         User user = message.getFrom();
 
-        processInput(excelHelperBot, message, user);
-        log.info(user.getUserName() + " sent the message " + message.getText());
-//        sendText(user.getId(), message.getText());
-//        copyMessage(user.getId(), message.getMessageId());
+        processKeyboardInput(excelHelperBot, message, user);
     }
 
 
-    private void processInput(ExcelHelperBot excelHelperBot, Message message, User user) {
+    private void processKeyboardInput(ExcelHelperBot excelHelperBot, Message message, User user) {
         String text;
         switch (message.getText()) {
             case "Create invoice":
                 replyKeyboardSender.sendInvDetailsMenu(user, excelHelperBot);
                 break;
-//            case "Year":
-//                text = """
-//                        Please send the year of invoice in the message to bot
-//                        It will be used in creation of invoice number field in Excel file
-//                        For example: 2023
-//                        """;
-//                textSender.sendText(user.getId(), text, excelHelperBot);
-//                invoiceDTO.setStatus("YEAR");
-//                System.out.println(invoiceDTO.getInvoiceStatus());
-//                break;
             case "Invoice Number":
                 text = """
                         Please send the invoice number in the year in the message to bot
@@ -72,22 +59,15 @@ public class MessageController {
                         For example: 015
                         """;
                 textSender.sendText(user.getId(), text, excelHelperBot);
-//                currentStatus = InvoiceStatus.INV_NO.toString();
                 invoiceDTO.setStatus("INV_NO");
                 break;
             case "Invoice Date":
-//                text = """
-//                        Please send the invoice date in the format YYYY-MM-DD
-//                        For example: 2023-12-15
-//                        """;
-//                textSender.sendText(user.getId(), text, excelHelperBot);
                 inlineKeyboardSender.sendMonthMenuKeyboard(user, excelHelperBot, LocalDate.now());
-//                invoiceDTO.setStatus("INV_DATE");
                 break;
             case "Customer Name":
                 text = """
                         Please send the customer first name and last name
-                        For example: Amalie Bruun
+                        For example: Angeline Jolie
                         """;
                 textSender.sendText(user.getId(), text, excelHelperBot);
                 invoiceDTO.setStatus("CUSTOMER_NAME");
@@ -101,7 +81,6 @@ public class MessageController {
                 invoiceDTO.setStatus("AMOUNT");
                 break;
             case "Get Invoice":
-//                sendDocumentTest(user);
                 if (invoiceDTO.isCompleted()) {
                     System.out.println(invoiceDTO);
                     documentSender.sendInvoiceDocument(user, invoiceDTO, excelHelperBot);
@@ -125,22 +104,11 @@ public class MessageController {
 
     private void processUserInput(Message message, User user, ExcelHelperBot excelHelperBot) {
         switch (invoiceDTO.getInvoiceStatus()) {
-//            case "YEAR":
-//                invoiceDTO.setYear(message.getText());
-//                System.out.println(invoiceDTO.getYear());
-//                replyKeyboardSender.sendInvoiceStatusAndInvoiceMenu(user, excelHelperBot);
-//                break;
             case "INV_NO":
                 invoiceDTO.setInvNo(message.getText());
                 System.out.println(invoiceDTO.getInvNo());
                 replyKeyboardSender.sendInvoiceStatusAndInvoiceMenu(user, excelHelperBot);
                 break;
-//            case "INV_DATE":
-//                invoiceDTO.setInvDate(message.getText());
-//                invoiceDTO.setYear(message.getText().substring(0, 4));
-//                System.out.println(invoiceDTO.getInvDate());
-//                replyKeyboardSender.sendInvoiceStatusAndInvoiceMenu(user, excelHelperBot);
-//                break;
             case "CUSTOMER_NAME":
                 invoiceDTO.setCustomerName(message.getText());
                 System.out.println(invoiceDTO.getCustomerName());

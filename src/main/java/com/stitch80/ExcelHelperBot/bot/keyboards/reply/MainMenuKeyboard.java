@@ -17,11 +17,11 @@ public class MainMenuKeyboard {
                 .text("Create invoice")
                 .build();
         firstRow.add(createInvoiceButton);
-        ReplyKeyboardMarkup mainMenuKeyboard = ReplyKeyboardMarkup.builder()
+
+        return ReplyKeyboardMarkup.builder()
                 .keyboardRow(new KeyboardRow(firstRow))
                 .resizeKeyboard(true)
                 .build();
-        return mainMenuKeyboard;
     }
 
 

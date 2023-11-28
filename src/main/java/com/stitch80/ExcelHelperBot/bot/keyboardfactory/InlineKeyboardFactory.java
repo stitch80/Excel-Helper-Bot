@@ -11,10 +11,10 @@ import java.time.LocalDate;
 @Component
 public class InlineKeyboardFactory {
 
-    private MonthMenuKeyboard monthMenuKeyboard;
-    private YearMenuKeyboard yearMenuKeyboard;
+    private final MonthMenuKeyboard monthMenuKeyboard;
+    private final YearMenuKeyboard yearMenuKeyboard;
 
-    private QuarterCenturyMenuKeyboard quarterCenturyMenuKeyboard;
+    private final QuarterCenturyMenuKeyboard quarterCenturyMenuKeyboard;
 
     public InlineKeyboardFactory(MonthMenuKeyboard monthMenuKeyboard,
                                  YearMenuKeyboard yearMenuKeyboard,

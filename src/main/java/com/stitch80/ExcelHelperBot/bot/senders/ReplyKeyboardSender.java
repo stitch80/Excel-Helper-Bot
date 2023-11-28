@@ -13,10 +13,9 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 @Component
 public class ReplyKeyboardSender {
 
-    ReplyKeyboardFactory replyKeyboardFactory;
-    private InvoiceDTO invoiceDTO;
-    //    private ReplyKeyboardsService keyboards;
-    private TextSender textSender;
+    private final InvoiceDTO invoiceDTO;
+    private final TextSender textSender;
+    private final ReplyKeyboardFactory replyKeyboardFactory;
 
 
     public ReplyKeyboardSender(InvoiceDTO invoiceDTO,
@@ -33,7 +32,7 @@ public class ReplyKeyboardSender {
                 At the moment it can help only with creation of invoices from template
                 But it's just a beginning 😀
                 """;
-        sendReplyMenu(user.getId(), text, replyKeyboardFactory.constructMainMenu(user, excelHelperBot), excelHelperBot);
+        sendReplyMenu(user.getId(), text, replyKeyboardFactory.constructMainMenu(), excelHelperBot);
         System.out.println(invoiceDTO.getInvoiceStatus());
     }
 
@@ -42,7 +41,7 @@ public class ReplyKeyboardSender {
                 Ready to create another invoice?
                 Just tap on "Create invoice" button!
                 """;
-        sendReplyMenu(user.getId(), text, replyKeyboardFactory.constructMainMenu(user, excelHelperBot), excelHelperBot);
+        sendReplyMenu(user.getId(), text, replyKeyboardFactory.constructMainMenu(), excelHelperBot);
         System.out.println(invoiceDTO.getInvoiceStatus());
     }
 
@@ -57,7 +56,7 @@ public class ReplyKeyboardSender {
         text = """
                 Please tap the buttons to provide necessary information for invoice
                 """;
-        sendReplyMenu(user.getId(), text, replyKeyboardFactory.constructInvoiceDetailsMenu(user, excelHelperBot), excelHelperBot);
+        sendReplyMenu(user.getId(), text, replyKeyboardFactory.constructInvoiceDetailsMenu(), excelHelperBot);
     }
 
     private void sendReplyMenu(

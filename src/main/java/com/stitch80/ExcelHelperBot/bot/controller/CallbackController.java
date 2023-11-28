@@ -19,9 +19,9 @@ import java.time.LocalDate;
 @Slf4j
 public class CallbackController {
 
+    private final InvoiceDTO invoiceDTO;
     InlineKeyboardSender inlineKeyboardSender;
     ReplyKeyboardSender replyKeyboardSender;
-    private InvoiceDTO invoiceDTO;
 
     public CallbackController(InlineKeyboardSender inlineKeyboardSender,
                               ReplyKeyboardSender replyKeyboardSender,
@@ -34,39 +34,34 @@ public class CallbackController {
     public void processCallBack(Update update, ExcelHelperBot excelHelperBot) {
         CallbackQuery callback = update.getCallbackQuery();
         User user = callback.getFrom();
-        String message = callback.getData();
+        String callbackMessage = callback.getData();
 
-        LocalDate localDate;
+        LocalDate localDate = getDateFromCallback(callback);
 
-        if (callback.getData().contains(MonthMenuKeyboard.CONTROL_MONTH)) {
-            localDate = getDateFromCallback(callback);
-            System.out.println(callback.getData() + " " + callback.getMessage().getMessageId());
+        if (callbackMessage.contains(MonthMenuKeyboard.CONTROL_MONTH)) {
             inlineKeyboardSender.switchMonthMenu(callback, excelHelperBot, localDate);
-        } else if (callback.getData().contains(YearMenuKeyboard.CONTROL_YEAR)) {
-            localDate = getDateFromCallback(callback);
-            if (callback.getData().contains("start_")) {
+        } else if (callbackMessage.contains(YearMenuKeyboard.CONTROL_YEAR)) {
+            if (callbackMessage.contains("start_")) {
                 inlineKeyboardSender.clearMenu(callback, excelHelperBot);
                 inlineKeyboardSender.deleteMessage(callback, excelHelperBot);
-                inlineKeyboardSender.sendYearMenuKeyboard(user, excelHelperBot, localDate);
+                inlineKeyboardSender.sendYearMenuKeyboard(callback, excelHelperBot, localDate);
             } else {
                 inlineKeyboardSender.switchYearMenu(callback, excelHelperBot, localDate);
             }
-        } else if (callback.getData().contains(QuarterCenturyMenuKeyboard.CONTROL_QUARTER_CENTURY)) {
-            localDate = getDateFromCallback(callback);
-            if (callback.getData().contains("start_")) {
+        } else if (callbackMessage.contains(QuarterCenturyMenuKeyboard.CONTROL_QUARTER_CENTURY)) {
+            if (callbackMessage.contains("start_")) {
                 inlineKeyboardSender.clearMenu(callback, excelHelperBot);
                 inlineKeyboardSender.deleteMessage(callback, excelHelperBot);
-                inlineKeyboardSender.sendYearRangeMenuKeyboard(user, excelHelperBot, localDate);
+                inlineKeyboardSender.sendYearRangeMenuKeyboard(callback, excelHelperBot, localDate);
 
             } else {
                 inlineKeyboardSender.switchYearRangeMenu(callback, excelHelperBot, localDate);
             }
         } else {
-            System.out.println(callback.getData() + " " + callback.getMessage().getMessageId());
             inlineKeyboardSender.clearMenu(callback, excelHelperBot);
             inlineKeyboardSender.deleteMessage(callback, excelHelperBot);
-            invoiceDTO.setInvDate(message);
-            invoiceDTO.setYear(message.substring(0, 4));
+            invoiceDTO.setInvDate(callbackMessage);
+            invoiceDTO.setYear(callbackMessage.substring(0, 4));
             replyKeyboardSender.sendInvoiceStatusAndInvoiceMenu(user, excelHelperBot);
 
 
@@ -74,17 +69,17 @@ public class CallbackController {
     }
 
     private LocalDate getDateFromCallback(CallbackQuery callbackQuery) {
-        if (callbackQuery.getData().contains(MonthMenuKeyboard.CONTROL_MONTH)) {
-            String[] date = callbackQuery.getData().substring(MonthMenuKeyboard.CONTROL_MONTH.length()).split("-");
+        String callbackMessage = callbackQuery.getData();
+        if (callbackMessage.contains(MonthMenuKeyboard.CONTROL_MONTH)) {
+            String[] date = callbackMessage.substring(MonthMenuKeyboard.CONTROL_MONTH.length()).split("-");
             return LocalDate.of(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2]));
         }
-        if (callbackQuery.getData().contains(YearMenuKeyboard.CONTROL_YEAR)) {
-            String year = callbackQuery.getData().substring(callbackQuery.getData().lastIndexOf("_") + 1);
+        if (
+                callbackMessage.contains(YearMenuKeyboard.CONTROL_YEAR) ||
+                        callbackMessage.contains(QuarterCenturyMenuKeyboard.CONTROL_QUARTER_CENTURY)
+        ) {
+            String year = callbackMessage.substring(callbackMessage.lastIndexOf("_") + 1);
             return LocalDate.of(Integer.parseInt(year), 1, 1);
-        }
-        if (callbackQuery.getData().contains(QuarterCenturyMenuKeyboard.CONTROL_QUARTER_CENTURY)) {
-            String yearRange = callbackQuery.getData().substring(callbackQuery.getData().lastIndexOf("_") + 1);
-            return LocalDate.of(Integer.parseInt(yearRange), 1, 1);
         }
         return LocalDate.now();
     }

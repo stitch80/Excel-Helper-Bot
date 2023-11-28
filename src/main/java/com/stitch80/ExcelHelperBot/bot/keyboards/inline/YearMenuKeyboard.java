@@ -26,12 +26,10 @@ public class YearMenuKeyboard {
                 .text("⬅️ Previous")
                 .callbackData(CONTROL_YEAR + localDate.minusYears(1).getYear())
                 .build();
-//        System.out.println(localDate.minusMonths(1));
         InlineKeyboardButton moveRight = InlineKeyboardButton.builder()
                 .text("Next ➡️")
                 .callbackData(CONTROL_YEAR + localDate.plusYears(1).getYear())
                 .build();
-//        System.out.println(localDate.plusMonths(1));
         InlineKeyboardButton currentYear = InlineKeyboardButton.builder()
                 .text(String.valueOf(localDate.getYear()))
                 .callbackData(QuarterCenturyMenuKeyboard.CONTROL_QUARTER_CENTURY + "start_" + localDate.getYear())

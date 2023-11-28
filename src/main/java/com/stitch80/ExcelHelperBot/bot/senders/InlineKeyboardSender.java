@@ -18,7 +18,7 @@ import java.time.LocalDate;
 @Component
 public class InlineKeyboardSender {
 
-    private InlineKeyboardFactory inlineKeyboardFactory;
+    private final InlineKeyboardFactory inlineKeyboardFactory;
 
     public InlineKeyboardSender(InlineKeyboardFactory inlineKeyboardFactory) {
         this.inlineKeyboardFactory = inlineKeyboardFactory;
@@ -28,11 +28,8 @@ public class InlineKeyboardSender {
 
         SendMessage sendMessageRequest = SendMessage.builder()
                 .chatId(user.getId())
-//                .parseMode("HTML")
                 .text("Choose invoice date")
                 .replyMarkup(inlineKeyboardFactory.constructMonthMenu(localDate))
-//                        .replyMarkup(inlineKeyboardFactory.constructYearMenu(LocalDate.now().minusMonths(0)))
-//                    .replyMarkup(inlineKeyboardFactory.constructQuarterCenturyMenu(LocalDate.now().minusMonths(0)))
                 .build();
         try {
             excelHelperBot.execute(sendMessageRequest);
@@ -73,15 +70,14 @@ public class InlineKeyboardSender {
 
     }
 
-    public void sendYearMenuKeyboard(User user, ExcelHelperBot excelHelperBot, LocalDate localDate) {
+    public void sendYearMenuKeyboard(CallbackQuery callback, ExcelHelperBot excelHelperBot, LocalDate localDate) {
+
+        User user = callback.getFrom();
 
         SendMessage sendMessageRequest = SendMessage.builder()
                 .chatId(user.getId())
-//                .parseMode("HTML")
                 .text("Choose month")
-//                .replyMarkup(inlineKeyboardFactory.constructMonthMenu(localDate))
                 .replyMarkup(inlineKeyboardFactory.constructYearMenu(localDate))
-//                    .replyMarkup(inlineKeyboardFactory.constructQuarterCenturyMenu(LocalDate.now().minusMonths(0)))
                 .build();
         try {
             excelHelperBot.execute(sendMessageRequest);
@@ -115,15 +111,14 @@ public class InlineKeyboardSender {
 
     }
 
-    public void sendYearRangeMenuKeyboard(User user, ExcelHelperBot excelHelperBot, LocalDate localDate) {
+    public void sendYearRangeMenuKeyboard(CallbackQuery callback, ExcelHelperBot excelHelperBot, LocalDate localDate) {
+
+        User user = callback.getFrom();
 
         SendMessage sendMessageRequest = SendMessage.builder()
                 .chatId(user.getId())
-//                .parseMode("HTML")
                 .text("Choose year")
-//                .replyMarkup(inlineKeyboardFactory.constructMonthMenu(localDate))
                 .replyMarkup(inlineKeyboardFactory.constructQuarterCenturyMenu(localDate))
-//                    .replyMarkup(inlineKeyboardFactory.constructQuarterCenturyMenu(LocalDate.now().minusMonths(0)))
                 .build();
         try {
             excelHelperBot.execute(sendMessageRequest);

@@ -1,8 +1,6 @@
 package com.stitch80.ExcelHelperBot.bot.controller;
 
 import com.stitch80.ExcelHelperBot.bot.ExcelHelperBot;
-import com.stitch80.ExcelHelperBot.bot.keyboardfactory.InlineKeyboardFactory;
-import com.stitch80.ExcelHelperBot.bot.keyboardfactory.ReplyKeyboardFactory;
 import com.stitch80.ExcelHelperBot.bot.senders.InlineKeyboardSender;
 import com.stitch80.ExcelHelperBot.bot.senders.ReplyKeyboardSender;
 import org.springframework.stereotype.Component;
@@ -15,17 +13,11 @@ import java.time.LocalDate;
 @Component
 public class CommandController {
 
-    private ReplyKeyboardFactory replyKeyboardFactory;
-    private InlineKeyboardFactory inlineKeyboardFactory;
-    private ReplyKeyboardSender replyKeyboardSender;
-    private InlineKeyboardSender inlineKeyboardSender;
+    private final ReplyKeyboardSender replyKeyboardSender;
+    private final InlineKeyboardSender inlineKeyboardSender;
 
-    public CommandController(ReplyKeyboardFactory replyKeyboardFactory,
-                             InlineKeyboardFactory inlineKeyboardFactory,
-                             ReplyKeyboardSender replyKeyboardSender,
+    public CommandController(ReplyKeyboardSender replyKeyboardSender,
                              InlineKeyboardSender inlineKeyboardSender) {
-        this.replyKeyboardFactory = replyKeyboardFactory;
-        this.inlineKeyboardFactory = inlineKeyboardFactory;
         this.replyKeyboardSender = replyKeyboardSender;
         this.inlineKeyboardSender = inlineKeyboardSender;
     }

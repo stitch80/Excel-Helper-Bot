@@ -26,7 +26,7 @@ public class DocumentSender {
                 invoiceDTO.getAmount()
         );
 
-        FileOutputStream targetFile = null;
+        FileOutputStream targetFile;
         String fileName = "RE-INV." + invoiceDTO.getInvNo() + ".xlsx";
         String fileAbsolutePath = filePath + fileName;
         try {
@@ -36,7 +36,6 @@ public class DocumentSender {
         }
         try {
             invoiceDocument.write(targetFile);
-//            invoiceDocument.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -60,13 +59,13 @@ public class DocumentSender {
             String filePath,
             String year, String invNo, String invDate, String customerName, double amount
     ) {
-        FileInputStream sourceFile = null;
+        FileInputStream sourceFile;
         try {
             sourceFile = new FileInputStream(filePath + "RE-INV.000.xlsx");
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-        XSSFWorkbook workbook = null;
+        XSSFWorkbook workbook;
         try {
             workbook = new XSSFWorkbook(sourceFile);
         } catch (IOException e) {

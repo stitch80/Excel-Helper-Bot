@@ -14,7 +14,7 @@ public class InvoiceProcessor {
     private final static CellAddress CUSTOMER_NAME = new CellAddress(9, 2);
     private final static CellAddress AMOUNT1 = new CellAddress(15, 5);
     private final static CellAddress AMOUNT2 = new CellAddress(20, 5);
-    private XSSFWorkbook currentWorkbook;
+    private final XSSFWorkbook currentWorkbook;
 
 
     public InvoiceProcessor(XSSFWorkbook currentWorkbook) {
@@ -22,10 +22,10 @@ public class InvoiceProcessor {
     }
 
     public XSSFWorkbook createNewInvoice(
-            String invNo, LocalDate invDate, String cutomerName, double amount
+            String invNo, LocalDate invDate, String customerName, double amount
     ) {
-        modifySheet("INV", invNo, invDate, cutomerName, amount);
-        modifySheet("RE", invNo, invDate, cutomerName, amount);
+        modifySheet("INV", invNo, invDate, customerName, amount);
+        modifySheet("RE", invNo, invDate, customerName, amount);
 
         return currentWorkbook;
     }

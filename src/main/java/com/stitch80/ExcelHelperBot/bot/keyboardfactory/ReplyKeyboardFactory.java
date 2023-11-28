@@ -3,16 +3,14 @@ package com.stitch80.ExcelHelperBot.bot.keyboardfactory;
 import com.stitch80.ExcelHelperBot.bot.keyboards.reply.InvoiceDetailMenuKeyboard;
 import com.stitch80.ExcelHelperBot.bot.keyboards.reply.MainMenuKeyboard;
 import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.bots.DefaultAbsSender;
-import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 
 @Component
 public class ReplyKeyboardFactory {
 
 
-    private MainMenuKeyboard mainMenuKeyboard;
-    private InvoiceDetailMenuKeyboard invoiceDetailMenuKeyboard;
+    private final MainMenuKeyboard mainMenuKeyboard;
+    private final InvoiceDetailMenuKeyboard invoiceDetailMenuKeyboard;
 
     public ReplyKeyboardFactory(MainMenuKeyboard mainMenuKeyboard,
                                 InvoiceDetailMenuKeyboard invoiceDetailMenuKeyboard) {
@@ -21,11 +19,11 @@ public class ReplyKeyboardFactory {
     }
 
 
-    public ReplyKeyboardMarkup constructMainMenu(User user, DefaultAbsSender excelHelperBot) {
+    public ReplyKeyboardMarkup constructMainMenu() {
         return mainMenuKeyboard.constructMainMenuKeyboard();
     }
 
-    public ReplyKeyboardMarkup constructInvoiceDetailsMenu(User user, DefaultAbsSender excelHelperBot) {
+    public ReplyKeyboardMarkup constructInvoiceDetailsMenu() {
         return invoiceDetailMenuKeyboard.constructInvoiceDetailsKeyboard();
     }
 
