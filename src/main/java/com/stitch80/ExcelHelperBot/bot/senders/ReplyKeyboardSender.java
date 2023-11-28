@@ -33,7 +33,6 @@ public class ReplyKeyboardSender {
                 But it's just a beginning 😀
                 """;
         sendReplyMenu(user.getId(), text, replyKeyboardFactory.constructMainMenu(), excelHelperBot);
-        System.out.println(invoiceDTO.getInvoiceStatus());
     }
 
     public void sendMainMenu(User user, ExcelHelperBot excelHelperBot) {
@@ -42,7 +41,6 @@ public class ReplyKeyboardSender {
                 Just tap on "Create invoice" button!
                 """;
         sendReplyMenu(user.getId(), text, replyKeyboardFactory.constructMainMenu(), excelHelperBot);
-        System.out.println(invoiceDTO.getInvoiceStatus());
     }
 
     public void sendInvoiceStatusAndInvoiceMenu(User user, ExcelHelperBot excelHelperBot) {
