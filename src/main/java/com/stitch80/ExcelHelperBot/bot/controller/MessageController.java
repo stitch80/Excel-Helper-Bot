@@ -106,17 +106,14 @@ public class MessageController {
         switch (invoiceDTO.getInvoiceStatus()) {
             case "INV_NO":
                 invoiceDTO.setInvNo(message.getText());
-                System.out.println(invoiceDTO.getInvNo());
                 replyKeyboardSender.sendInvoiceStatusAndInvoiceMenu(user, excelHelperBot);
                 break;
             case "CUSTOMER_NAME":
                 invoiceDTO.setCustomerName(message.getText());
-                System.out.println(invoiceDTO.getCustomerName());
                 replyKeyboardSender.sendInvoiceStatusAndInvoiceMenu(user, excelHelperBot);
                 break;
             case "AMOUNT":
                 invoiceDTO.setAmount(Double.parseDouble(message.getText()));
-                System.out.println(invoiceDTO.getAmount());
                 replyKeyboardSender.sendInvoiceStatusAndInvoiceMenu(user, excelHelperBot);
                 break;
         }
