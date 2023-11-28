@@ -1,4 +1,4 @@
-package com.stitch80.ExcelHelperBot.bot.keyboards;
+package com.stitch80.ExcelHelperBot.bot.keyboards.reply;
 
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
@@ -6,40 +6,15 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.Keyboard
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @Component
-public class ReplyKeyboards {
+public class InvoiceDetailMenuKeyboard {
 
-    private HashMap<String, ReplyKeyboardMarkup> keyboards;
-
-    public ReplyKeyboards() {
-        this.keyboards = new HashMap<>();
-        constructMainMenuKeyboard();
-        constructInvoiceDetailsKeyboard();
-    }
-
-    private void constructMainMenuKeyboard() {
+    public ReplyKeyboardMarkup constructInvoiceDetailsKeyboard() {
         List<KeyboardButton> firstRow = new ArrayList<>();
-        var createInvoiceButton = KeyboardButton.builder()
-                .text("Create invoice")
-                .build();
-        firstRow.add(createInvoiceButton);
-        var createInvoiceKeyboard = ReplyKeyboardMarkup.builder()
-                .keyboardRow(new KeyboardRow(firstRow))
-//                .isPersistent(true)
-                .resizeKeyboard(true)
-                .build();
-        keyboards.put("main", createInvoiceKeyboard);
-    }
-
-    private void constructInvoiceDetailsKeyboard() {
-        List<KeyboardButton> firstRow = new ArrayList<>();
-//        KeyboardButton setYear = KeyboardButton.builder().text("Year").build();
         KeyboardButton setInvoiceNumber = KeyboardButton.builder().text("Invoice Number").build();
         KeyboardButton setInvoiceDate = KeyboardButton.builder().text("Invoice Date").build();
-//        firstRow.add(setYear);
         firstRow.add(setInvoiceNumber);
         firstRow.add(setInvoiceDate);
 
@@ -58,16 +33,8 @@ public class ReplyKeyboards {
                 .keyboardRow(new KeyboardRow(secondRow))
                 .keyboardRow(new KeyboardRow(thirdRow))
                 .resizeKeyboard(true)
-//                .isPersistent(true)
                 .build();
 
-        keyboards.put("invdetails", invoiceDetailsKeyboard);
-
+        return invoiceDetailsKeyboard;
     }
-
-    public ReplyKeyboardMarkup getKeyboard(String name) {
-        return keyboards.get(name);
-    }
-
-
 }

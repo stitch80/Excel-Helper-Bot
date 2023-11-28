@@ -1,4 +1,4 @@
-package com.stitch80.ExcelHelperBot.bot.keyboards;
+package com.stitch80.ExcelHelperBot.bot.keyboards.inline;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -35,7 +35,7 @@ public class MonthMenuKeyboard {
         InlineKeyboardButton currentMonth = InlineKeyboardButton.builder()
                 .text(localDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.US) +
                         " " + localDate.getYear())
-                .callbackData(String.valueOf(localDate.getYear()))
+                .callbackData(YearMenuKeyboard.CONTROL_YEAR + "start_" + localDate.getYear())
                 .build();
 
         List<InlineKeyboardButton> curMonthRow = new ArrayList<>();

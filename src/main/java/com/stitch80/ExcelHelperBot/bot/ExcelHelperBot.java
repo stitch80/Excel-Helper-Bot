@@ -1,5 +1,7 @@
 package com.stitch80.ExcelHelperBot.bot;
 
+import com.stitch80.ExcelHelperBot.bot.controller.CallbackController;
+import com.stitch80.ExcelHelperBot.bot.controller.CommandController;
 import com.stitch80.ExcelHelperBot.bot.controller.MessageController;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,53 +13,33 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 @Slf4j
 public class ExcelHelperBot extends TelegramLongPollingBot {
 
-    //    private InlineKeyboardMarkup keyboardM1;
-//    private InlineKeyboardMarkup keyboardM2;
     private MessageController messageController;
+    private CallbackController callbackController;
+    private CommandController commandController;
 
 
     public ExcelHelperBot(
             @Value("${bot.token}") String botToken,
-            MessageController messageController
-//            ReplyKeyboards keyboards,
-//            InvoiceDTO invoiceDTO
+            MessageController messageController,
+            CallbackController callbackController,
+            CommandController commandController
     ) {
         super(botToken);
         this.messageController = messageController;
-//        setUpKeyBoards();
-//        this.keyboards = keyboards;
-//        this.invoiceDTO = invoiceDTO;
+        this.callbackController = callbackController;
+        this.commandController = commandController;
     }
 
-//    private void setUpKeyBoards() {
-//        var next = InlineKeyboardButton.builder()
-//                .text("Next").callbackData("next")
-//                .build();
-//
-//        var back = InlineKeyboardButton.builder()
-//                .text("Back").callbackData("back")
-//                .build();
-//
-//        var url = InlineKeyboardButton.builder()
-//                .text("Tutorial")
-//                .url("https://core.telegram.org/bots/api")
-//                .build();
-//
-//        keyboardM1 = InlineKeyboardMarkup.builder()
-//                .keyboardRow(List.of(next)).build();
-//
-////Buttons are wrapped in lists since each keyboard is a set of button rows
-//        keyboardM2 = InlineKeyboardMarkup.builder()
-//                .keyboardRow(List.of(back))
-//                .keyboardRow(List.of(url))
-//                .build();
-//    }
 
     @Override
     public void onUpdateReceived(Update update) {
+
         if (update.hasCallbackQuery()) {
-//            processCallback(update);
-        } else {
+            callbackController.processCallBack(update, this);
+        } else if (update.hasMessage()) {
+            if (update.getMessage().isCommand()) {
+                commandController.processCommand(update, this);
+            }
             messageController.processMessage(update, this);
         }
     }

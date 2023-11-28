@@ -1,21 +1,24 @@
-package com.stitch80.ExcelHelperBot.bot.keyboards;
+package com.stitch80.ExcelHelperBot.bot.keyboardfactory;
 
+import com.stitch80.ExcelHelperBot.bot.keyboards.inline.MonthMenuKeyboard;
+import com.stitch80.ExcelHelperBot.bot.keyboards.inline.QuarterCenturyMenuKeyboard;
+import com.stitch80.ExcelHelperBot.bot.keyboards.inline.YearMenuKeyboard;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 
 import java.time.LocalDate;
 
 @Component
-public class InlineKeyboards {
+public class InlineKeyboardFactory {
 
     private MonthMenuKeyboard monthMenuKeyboard;
     private YearMenuKeyboard yearMenuKeyboard;
 
     private QuarterCenturyMenuKeyboard quarterCenturyMenuKeyboard;
 
-    public InlineKeyboards(MonthMenuKeyboard monthMenuKeyboard,
-                           YearMenuKeyboard yearMenuKeyboard,
-                           QuarterCenturyMenuKeyboard quarterCenturyMenuKeyboard) {
+    public InlineKeyboardFactory(MonthMenuKeyboard monthMenuKeyboard,
+                                 YearMenuKeyboard yearMenuKeyboard,
+                                 QuarterCenturyMenuKeyboard quarterCenturyMenuKeyboard) {
         this.monthMenuKeyboard = monthMenuKeyboard;
         this.yearMenuKeyboard = yearMenuKeyboard;
         this.quarterCenturyMenuKeyboard = quarterCenturyMenuKeyboard;

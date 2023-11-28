@@ -1,4 +1,4 @@
-package com.stitch80.ExcelHelperBot.bot.keyboards;
+package com.stitch80.ExcelHelperBot.bot.keyboards.inline;
 
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
@@ -24,17 +24,17 @@ public class YearMenuKeyboard {
         //Create buttons for the first row (current year and buttons)
         InlineKeyboardButton moveLeft = InlineKeyboardButton.builder()
                 .text("⬅️ Previous")
-                .callbackData(CONTROL_YEAR + localDate.minusYears(1))
+                .callbackData(CONTROL_YEAR + localDate.minusYears(1).getYear())
                 .build();
 //        System.out.println(localDate.minusMonths(1));
         InlineKeyboardButton moveRight = InlineKeyboardButton.builder()
                 .text("Next ➡️")
-                .callbackData(CONTROL_YEAR + localDate.plusYears(1))
+                .callbackData(CONTROL_YEAR + localDate.plusYears(1).getYear())
                 .build();
 //        System.out.println(localDate.plusMonths(1));
         InlineKeyboardButton currentYear = InlineKeyboardButton.builder()
                 .text(String.valueOf(localDate.getYear()))
-                .callbackData(MonthMenuKeyboard.CONTROL_MONTH + localDate.getYear())
+                .callbackData(QuarterCenturyMenuKeyboard.CONTROL_QUARTER_CENTURY + "start_" + localDate.getYear())
                 .build();
 
         //Add buttons to the first row

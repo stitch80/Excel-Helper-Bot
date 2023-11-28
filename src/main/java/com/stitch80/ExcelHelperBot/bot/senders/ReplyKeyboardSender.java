@@ -1,9 +1,10 @@
 package com.stitch80.ExcelHelperBot.bot.senders;
 
 import com.stitch80.ExcelHelperBot.bot.ExcelHelperBot;
-import com.stitch80.ExcelHelperBot.bot.keyboards.ReplyKeyboards;
+import com.stitch80.ExcelHelperBot.bot.keyboardfactory.ReplyKeyboardFactory;
 import com.stitch80.ExcelHelperBot.dto.InvoiceDTO;
 import org.springframework.stereotype.Component;
+import org.telegram.telegrambots.bots.DefaultAbsSender;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
@@ -12,23 +13,36 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 @Component
 public class ReplyKeyboardSender {
 
+    ReplyKeyboardFactory replyKeyboardFactory;
     private InvoiceDTO invoiceDTO;
-    private ReplyKeyboards keyboards;
+    //    private ReplyKeyboardsService keyboards;
     private TextSender textSender;
 
-    public ReplyKeyboardSender(InvoiceDTO invoiceDTO, ReplyKeyboards keyboards, TextSender textSender) {
+
+    public ReplyKeyboardSender(InvoiceDTO invoiceDTO,
+                               ReplyKeyboardFactory replyKeyboardFactory,
+                               TextSender textSender) {
         this.invoiceDTO = invoiceDTO;
-        this.keyboards = keyboards;
+        this.replyKeyboardFactory = replyKeyboardFactory;
         this.textSender = textSender;
     }
 
-    public void sendMainMenu(User user, ExcelHelperBot excelHelperBot) {
+    public void sendStartMenu(User user, ExcelHelperBot excelHelperBot) {
         String text = """
                 Welcome to this helper bot
                 At the moment it can help only with creation of invoices from template
                 But it's just a beginning 😀
                 """;
-        sendReplyMenu(user.getId(), text, keyboards.getKeyboard("main"), excelHelperBot);
+        sendReplyMenu(user.getId(), text, replyKeyboardFactory.constructMainMenu(user, excelHelperBot), excelHelperBot);
+        System.out.println(invoiceDTO.getInvoiceStatus());
+    }
+
+    public void sendMainMenu(User user, ExcelHelperBot excelHelperBot) {
+        String text = """
+                Ready to create another invoice?
+                Just tap on "Create invoice" button!
+                """;
+        sendReplyMenu(user.getId(), text, replyKeyboardFactory.constructMainMenu(user, excelHelperBot), excelHelperBot);
         System.out.println(invoiceDTO.getInvoiceStatus());
     }
 
@@ -43,13 +57,13 @@ public class ReplyKeyboardSender {
         text = """
                 Please tap the buttons to provide necessary information for invoice
                 """;
-        sendReplyMenu(user.getId(), text, keyboards.getKeyboard("invdetails"), excelHelperBot);
+        sendReplyMenu(user.getId(), text, replyKeyboardFactory.constructInvoiceDetailsMenu(user, excelHelperBot), excelHelperBot);
     }
 
-    public void sendReplyMenu(
+    private void sendReplyMenu(
             Long userId, String text,
             ReplyKeyboardMarkup kb,
-            ExcelHelperBot excelHelperBot) {
+            DefaultAbsSender excelHelperBot) {
         SendMessage sendMessage = SendMessage.builder()
                 .chatId(userId.toString())
                 .text(text)
