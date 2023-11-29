@@ -1,8 +1,8 @@
-package com.stitch80.ExcelHelperBot.bot.controller;
+package com.stitch80.ExcelHelperBot.components.bot.controller;
 
-import com.stitch80.ExcelHelperBot.bot.ExcelHelperBot;
-import com.stitch80.ExcelHelperBot.bot.senders.InlineKeyboardSender;
-import com.stitch80.ExcelHelperBot.bot.senders.ReplyKeyboardSender;
+import com.stitch80.ExcelHelperBot.components.bot.ExcelHelperBot;
+import com.stitch80.ExcelHelperBot.components.bot.senders.InlineKeyboardSender;
+import com.stitch80.ExcelHelperBot.components.bot.senders.ReplyKeyboardSender;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;

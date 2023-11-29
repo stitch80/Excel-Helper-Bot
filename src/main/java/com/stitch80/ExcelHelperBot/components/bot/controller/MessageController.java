@@ -1,11 +1,11 @@
-package com.stitch80.ExcelHelperBot.bot.controller;
+package com.stitch80.ExcelHelperBot.components.bot.controller;
 
-import com.stitch80.ExcelHelperBot.bot.ExcelHelperBot;
-import com.stitch80.ExcelHelperBot.bot.senders.DocumentSender;
-import com.stitch80.ExcelHelperBot.bot.senders.InlineKeyboardSender;
-import com.stitch80.ExcelHelperBot.bot.senders.ReplyKeyboardSender;
-import com.stitch80.ExcelHelperBot.bot.senders.TextSender;
-import com.stitch80.ExcelHelperBot.dto.InvoiceDTO;
+import com.stitch80.ExcelHelperBot.components.Invoices;
+import com.stitch80.ExcelHelperBot.components.bot.ExcelHelperBot;
+import com.stitch80.ExcelHelperBot.components.bot.senders.DocumentSender;
+import com.stitch80.ExcelHelperBot.components.bot.senders.InlineKeyboardSender;
+import com.stitch80.ExcelHelperBot.components.bot.senders.ReplyKeyboardSender;
+import com.stitch80.ExcelHelperBot.components.bot.senders.TextSender;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Message;
@@ -19,19 +19,19 @@ import java.time.LocalDate;
 public class MessageController {
 
 
-    private final InvoiceDTO invoiceDTO;
+    private final Invoices invoices;
     private final TextSender textSender;
     private final DocumentSender documentSender;
     private final ReplyKeyboardSender replyKeyboardSender;
     private final InlineKeyboardSender inlineKeyboardSender;
 
     public MessageController(
-            InvoiceDTO invoiceDTO,
+            Invoices invoices,
             TextSender textSender,
             ReplyKeyboardSender replyKeyboardSender,
             InlineKeyboardSender inlineKeyboardSender,
             DocumentSender documentSender) {
-        this.invoiceDTO = invoiceDTO;
+        this.invoices = invoices;
         this.textSender = textSender;
         this.replyKeyboardSender = replyKeyboardSender;
         this.inlineKeyboardSender = inlineKeyboardSender;
@@ -48,8 +48,10 @@ public class MessageController {
 
     private void processKeyboardInput(ExcelHelperBot excelHelperBot, Message message, User user) {
         String text;
+        Long userId = user.getId();
         switch (message.getText()) {
             case "Create invoice":
+                invoices.createNewInvoice(userId);
                 replyKeyboardSender.sendInvDetailsMenu(user, excelHelperBot);
                 break;
             case "Invoice Number":
@@ -58,8 +60,8 @@ public class MessageController {
                         It will be used in creation of invoice number field in Excel file
                         For example: 015
                         """;
-                textSender.sendText(user.getId(), text, excelHelperBot);
-                invoiceDTO.setStatus("INV_NO");
+                textSender.sendText(userId, text, excelHelperBot);
+                invoices.setStatus("INV_NO", userId);
                 break;
             case "Invoice Date":
                 inlineKeyboardSender.sendMonthMenuKeyboard(user, excelHelperBot, LocalDate.now());
@@ -69,27 +71,27 @@ public class MessageController {
                         Please send the customer first name and last name
                         For example: Angeline Jolie
                         """;
-                textSender.sendText(user.getId(), text, excelHelperBot);
-                invoiceDTO.setStatus("CUSTOMER_NAME");
+                textSender.sendText(userId, text, excelHelperBot);
+                invoices.setStatus("CUSTOMER_NAME", userId);
                 break;
             case "Amount":
                 text = """
                         Please send the invoice amount
                         For example: 10000
                         """;
-                textSender.sendText(user.getId(), text, excelHelperBot);
-                invoiceDTO.setStatus("AMOUNT");
+                textSender.sendText(userId, text, excelHelperBot);
+                invoices.setStatus("AMOUNT", userId);
                 break;
             case "Get Invoice":
-                if (invoiceDTO.isCompleted()) {
-                    documentSender.sendInvoiceDocument(user, invoiceDTO, excelHelperBot);
+                if (invoices.userInvoiceIsCompleted(userId)) {
+                    documentSender.sendInvoiceDocument(user, invoices, excelHelperBot);
                     replyKeyboardSender.sendMainMenu(user, excelHelperBot);
                 } else {
                     text = """
                             Invoice is not completed
                             Please fill all the fields
                             """;
-                    textSender.sendText(user.getId(), text, excelHelperBot);
+                    textSender.sendText(userId, text, excelHelperBot);
                 }
                 break;
             default:
@@ -102,17 +104,19 @@ public class MessageController {
 
 
     private void processUserInput(Message message, User user, ExcelHelperBot excelHelperBot) {
-        switch (invoiceDTO.getInvoiceStatus()) {
+        Long userId = user.getId();
+        String messageText = message.getText();
+        switch (invoices.getInvoiceStatus(userId)) {
             case "INV_NO":
-                invoiceDTO.setInvNo(message.getText());
+                invoices.setInvNo(messageText, userId);
                 replyKeyboardSender.sendInvoiceStatusAndInvoiceMenu(user, excelHelperBot);
                 break;
             case "CUSTOMER_NAME":
-                invoiceDTO.setCustomerName(message.getText());
+                invoices.setCustomerName(messageText, userId);
                 replyKeyboardSender.sendInvoiceStatusAndInvoiceMenu(user, excelHelperBot);
                 break;
             case "AMOUNT":
-                invoiceDTO.setAmount(Double.parseDouble(message.getText()));
+                invoices.setAmount(Double.parseDouble(messageText), userId);
                 replyKeyboardSender.sendInvoiceStatusAndInvoiceMenu(user, excelHelperBot);
                 break;
         }

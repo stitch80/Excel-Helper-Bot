@@ -1,6 +1,6 @@
-package com.stitch80.ExcelHelperBot.bot.senders;
+package com.stitch80.ExcelHelperBot.components.bot.senders;
 
-import com.stitch80.ExcelHelperBot.bot.ExcelHelperBot;
+import com.stitch80.ExcelHelperBot.components.bot.ExcelHelperBot;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;

@@ -1,4 +1,4 @@
-package com.stitch80.ExcelHelperBot.bot.controller;
+package com.stitch80.ExcelHelperBot.components.bot.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

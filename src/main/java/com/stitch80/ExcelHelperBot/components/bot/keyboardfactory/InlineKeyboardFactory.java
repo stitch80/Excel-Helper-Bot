@@ -1,8 +1,8 @@
-package com.stitch80.ExcelHelperBot.bot.keyboardfactory;
+package com.stitch80.ExcelHelperBot.components.bot.keyboardfactory;
 
-import com.stitch80.ExcelHelperBot.bot.keyboards.inline.MonthMenuKeyboard;
-import com.stitch80.ExcelHelperBot.bot.keyboards.inline.QuarterCenturyMenuKeyboard;
-import com.stitch80.ExcelHelperBot.bot.keyboards.inline.YearMenuKeyboard;
+import com.stitch80.ExcelHelperBot.components.bot.keyboards.inline.MonthMenuKeyboard;
+import com.stitch80.ExcelHelperBot.components.bot.keyboards.inline.QuarterCenturyMenuKeyboard;
+import com.stitch80.ExcelHelperBot.components.bot.keyboards.inline.YearMenuKeyboard;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 

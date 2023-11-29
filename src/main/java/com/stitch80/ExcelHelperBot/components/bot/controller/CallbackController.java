@@ -1,12 +1,12 @@
-package com.stitch80.ExcelHelperBot.bot.controller;
+package com.stitch80.ExcelHelperBot.components.bot.controller;
 
-import com.stitch80.ExcelHelperBot.bot.ExcelHelperBot;
-import com.stitch80.ExcelHelperBot.bot.keyboards.inline.MonthMenuKeyboard;
-import com.stitch80.ExcelHelperBot.bot.keyboards.inline.QuarterCenturyMenuKeyboard;
-import com.stitch80.ExcelHelperBot.bot.keyboards.inline.YearMenuKeyboard;
-import com.stitch80.ExcelHelperBot.bot.senders.InlineKeyboardSender;
-import com.stitch80.ExcelHelperBot.bot.senders.ReplyKeyboardSender;
-import com.stitch80.ExcelHelperBot.dto.InvoiceDTO;
+import com.stitch80.ExcelHelperBot.components.Invoices;
+import com.stitch80.ExcelHelperBot.components.bot.ExcelHelperBot;
+import com.stitch80.ExcelHelperBot.components.bot.keyboards.inline.MonthMenuKeyboard;
+import com.stitch80.ExcelHelperBot.components.bot.keyboards.inline.QuarterCenturyMenuKeyboard;
+import com.stitch80.ExcelHelperBot.components.bot.keyboards.inline.YearMenuKeyboard;
+import com.stitch80.ExcelHelperBot.components.bot.senders.InlineKeyboardSender;
+import com.stitch80.ExcelHelperBot.components.bot.senders.ReplyKeyboardSender;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
@@ -19,16 +19,16 @@ import java.time.LocalDate;
 @Slf4j
 public class CallbackController {
 
-    private final InvoiceDTO invoiceDTO;
+    private final Invoices invoices;
     InlineKeyboardSender inlineKeyboardSender;
     ReplyKeyboardSender replyKeyboardSender;
 
     public CallbackController(InlineKeyboardSender inlineKeyboardSender,
                               ReplyKeyboardSender replyKeyboardSender,
-                              InvoiceDTO invoiceDTO) {
+                              Invoices invoices) {
         this.inlineKeyboardSender = inlineKeyboardSender;
         this.replyKeyboardSender = replyKeyboardSender;
-        this.invoiceDTO = invoiceDTO;
+        this.invoices = invoices;
     }
 
     public void processCallBack(Update update, ExcelHelperBot excelHelperBot) {
@@ -60,8 +60,9 @@ public class CallbackController {
         } else {
             inlineKeyboardSender.clearMenu(callback, excelHelperBot);
             inlineKeyboardSender.deleteMessage(callback, excelHelperBot);
-            invoiceDTO.setInvDate(callbackMessage);
-            invoiceDTO.setYear(callbackMessage.substring(0, 4));
+            Long userId = user.getId();
+            invoices.setInvDate(callbackMessage, userId);
+            invoices.setYear(callbackMessage.substring(0, 4), userId);
             replyKeyboardSender.sendInvoiceStatusAndInvoiceMenu(user, excelHelperBot);
 
 

@@ -1,8 +1,8 @@
-package com.stitch80.ExcelHelperBot.bot.senders;
+package com.stitch80.ExcelHelperBot.components.bot.senders;
 
-import com.stitch80.ExcelHelperBot.bot.ExcelHelperBot;
-import com.stitch80.ExcelHelperBot.bot.keyboardfactory.ReplyKeyboardFactory;
-import com.stitch80.ExcelHelperBot.dto.InvoiceDTO;
+import com.stitch80.ExcelHelperBot.components.Invoices;
+import com.stitch80.ExcelHelperBot.components.bot.ExcelHelperBot;
+import com.stitch80.ExcelHelperBot.components.bot.keyboardfactory.ReplyKeyboardFactory;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.DefaultAbsSender;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -13,15 +13,15 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 @Component
 public class ReplyKeyboardSender {
 
-    private final InvoiceDTO invoiceDTO;
+    private final Invoices invoices;
     private final TextSender textSender;
     private final ReplyKeyboardFactory replyKeyboardFactory;
 
 
-    public ReplyKeyboardSender(InvoiceDTO invoiceDTO,
+    public ReplyKeyboardSender(Invoices invoices,
                                ReplyKeyboardFactory replyKeyboardFactory,
                                TextSender textSender) {
-        this.invoiceDTO = invoiceDTO;
+        this.invoices = invoices;
         this.replyKeyboardFactory = replyKeyboardFactory;
         this.textSender = textSender;
     }
@@ -44,9 +44,10 @@ public class ReplyKeyboardSender {
     }
 
     public void sendInvoiceStatusAndInvoiceMenu(User user, ExcelHelperBot excelHelperBot) {
-        textSender.sendText(user.getId(), invoiceDTO.constructInvoiceStatusMessage(), excelHelperBot);
+        Long userId = user.getId();
+        textSender.sendText(userId, invoices.constructInvoiceStatusMessage(userId), excelHelperBot);
         sendInvDetailsMenu(user, excelHelperBot);
-        invoiceDTO.checkIfInvoiceIsCompleted();
+        invoices.checkIfInvoiceIsCompleted(userId);
     }
 
     public void sendInvDetailsMenu(User user, ExcelHelperBot excelHelperBot) {

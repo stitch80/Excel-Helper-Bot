@@ -1,4 +1,4 @@
-package com.stitch80.ExcelHelperBot.fileprocessor;
+package com.stitch80.ExcelHelperBot.components.fileprocessor;
 
 import org.apache.poi.ss.util.CellAddress;
 import org.apache.poi.xssf.usermodel.XSSFCell;

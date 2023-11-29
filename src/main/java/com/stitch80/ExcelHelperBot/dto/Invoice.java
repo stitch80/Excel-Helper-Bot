@@ -5,14 +5,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.apache.commons.lang3.EnumUtils;
-import org.springframework.stereotype.Component;
 
-
-@Component
 @Getter
 @Setter
 @NoArgsConstructor
-public class InvoiceDTO {
+public class Invoice {
+
 
     private String year;
     private String invNo;
@@ -132,5 +130,6 @@ public class InvoiceDTO {
         }
     }
 }
+
 
 

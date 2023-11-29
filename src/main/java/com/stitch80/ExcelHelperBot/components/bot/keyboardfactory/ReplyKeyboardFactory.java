@@ -1,7 +1,7 @@
-package com.stitch80.ExcelHelperBot.bot.keyboardfactory;
+package com.stitch80.ExcelHelperBot.components.bot.keyboardfactory;
 
-import com.stitch80.ExcelHelperBot.bot.keyboards.reply.InvoiceDetailMenuKeyboard;
-import com.stitch80.ExcelHelperBot.bot.keyboards.reply.MainMenuKeyboard;
+import com.stitch80.ExcelHelperBot.components.bot.keyboards.reply.InvoiceDetailMenuKeyboard;
+import com.stitch80.ExcelHelperBot.components.bot.keyboards.reply.MainMenuKeyboard;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 

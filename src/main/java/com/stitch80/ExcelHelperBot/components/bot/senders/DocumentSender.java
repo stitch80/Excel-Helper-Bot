@@ -1,8 +1,9 @@
-package com.stitch80.ExcelHelperBot.bot.senders;
+package com.stitch80.ExcelHelperBot.components.bot.senders;
 
-import com.stitch80.ExcelHelperBot.bot.ExcelHelperBot;
-import com.stitch80.ExcelHelperBot.dto.InvoiceDTO;
-import com.stitch80.ExcelHelperBot.fileprocessor.InvoiceProcessor;
+import com.stitch80.ExcelHelperBot.components.Invoices;
+import com.stitch80.ExcelHelperBot.components.bot.ExcelHelperBot;
+import com.stitch80.ExcelHelperBot.components.fileprocessor.InvoiceProcessor;
+import com.stitch80.ExcelHelperBot.dto.Invoice;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -25,18 +26,19 @@ public class DocumentSender {
     }
 
     public void sendInvoiceDocument(
-            User user, InvoiceDTO invoiceDTO, ExcelHelperBot excelHelperBot) {
+            User user, Invoices invoices, ExcelHelperBot excelHelperBot) {
 
+        Invoice invoice = invoices.getUserInvoice(user.getId());
 //        String filePath = "/usr/local/bin/";
         XSSFWorkbook invoiceDocument = getModifiedExcelWorkbook(
                 filePath,
-                invoiceDTO.getYear(), invoiceDTO.getInvNo(),
-                invoiceDTO.getInvDate(), invoiceDTO.getCustomerName(),
-                invoiceDTO.getAmount()
+                invoice.getYear(), invoice.getInvNo(),
+                invoice.getInvDate(), invoice.getCustomerName(),
+                invoice.getAmount()
         );
 
         FileOutputStream targetFile;
-        String fileName = "RE-INV." + invoiceDTO.getInvNo() + ".xlsx";
+        String fileName = "RE-INV." + invoice.getInvNo() + ".xlsx";
         String fileAbsolutePath = filePath + fileName;
         try {
             targetFile = new FileOutputStream(fileAbsolutePath);

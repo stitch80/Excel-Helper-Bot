@@ -1,6 +1,6 @@
-package com.stitch80.ExcelHelperBot.bot.config;
+package com.stitch80.ExcelHelperBot.components.bot.config;
 
-import com.stitch80.ExcelHelperBot.bot.ExcelHelperBot;
+import com.stitch80.ExcelHelperBot.components.bot.ExcelHelperBot;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.telegram.telegrambots.meta.TelegramBotsApi;

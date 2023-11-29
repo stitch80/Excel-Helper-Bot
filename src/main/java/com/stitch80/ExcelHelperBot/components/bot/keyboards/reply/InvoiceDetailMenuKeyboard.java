@@ -1,4 +1,4 @@
-package com.stitch80.ExcelHelperBot.bot.keyboards.reply;
+package com.stitch80.ExcelHelperBot.components.bot.keyboards.reply;
 
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;

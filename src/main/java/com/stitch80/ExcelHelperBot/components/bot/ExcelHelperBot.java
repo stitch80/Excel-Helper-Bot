@@ -1,8 +1,8 @@
-package com.stitch80.ExcelHelperBot.bot;
+package com.stitch80.ExcelHelperBot.components.bot;
 
-import com.stitch80.ExcelHelperBot.bot.controller.CallbackController;
-import com.stitch80.ExcelHelperBot.bot.controller.CommandController;
-import com.stitch80.ExcelHelperBot.bot.controller.MessageController;
+import com.stitch80.ExcelHelperBot.components.bot.controller.CallbackController;
+import com.stitch80.ExcelHelperBot.components.bot.controller.CommandController;
+import com.stitch80.ExcelHelperBot.components.bot.controller.MessageController;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -39,8 +39,9 @@ public class ExcelHelperBot extends TelegramLongPollingBot {
         } else if (update.hasMessage()) {
             if (update.getMessage().isCommand()) {
                 commandController.processCommand(update, this);
+            } else {
+                messageController.processMessage(update, this);
             }
-            messageController.processMessage(update, this);
         }
     }
 

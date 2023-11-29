@@ -1,4 +1,4 @@
-package com.stitch80.ExcelHelperBot.bot.keyboards.inline;
+package com.stitch80.ExcelHelperBot.components.bot.keyboards.inline;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
