@@ -3,10 +3,7 @@ version: "3"
 services:
   excel-helper-bot:
     image: stitch80/excelhelperbot
-    networks:
-      - bot-network
+    container_name: bot_container
+    restart: always
     ports:
       - 80:8080
-
-networks:
-  bot-network:
