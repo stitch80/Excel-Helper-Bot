@@ -63,6 +63,4 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@18.141.194.145 'sudo docker run -d --env-file .botenv --name bot_container -p 80:8080 stitch80/excelhelperbot:latest'
       - name: Test
         run: |
-          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@18.141.194.145 'sudo find / -type f -name healthcheck.sh'
-          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@18.141.194.145 'sudo chmod 750 /home/runner/work/Excel-Helper-Bot/Excel-Helper-Bot/healthcheck.sh'
-          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@18.141.194.145 'sudo /home/runner/work/Excel-Helper-Bot/Excel-Helper-Bot/healthcheck.sh bot_container 60'
+          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@18.141.194.145 'sudo healthcheck.sh bot_container 60'
