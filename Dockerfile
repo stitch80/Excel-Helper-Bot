@@ -8,5 +8,6 @@ WORKDIR /usr/local/bin/
 
 COPY build/libs/ExcelHelperBot-0.0.1-SNAPSHOT.jar telegram-bot.jar
 COPY src/main/resources/RE-INV.000.xlsx RE-INV.000.xlsx
+COPY healthcheck.sh healthcheck.sh
 
 CMD ["java", "-jar", "telegram-bot.jar"]
