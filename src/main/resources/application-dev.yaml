@@ -1,5 +1,0 @@
-spring:
-  config:
-    activate:
-      on-profile: dev
-file.path: ${user.dir}/src/main/resources/

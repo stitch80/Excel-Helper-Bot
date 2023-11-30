@@ -37,4 +37,3 @@ out/
 .vscode/
 
 #/src/main/resources/*.xlsx
-/src/main/resources/application-dev.yaml
