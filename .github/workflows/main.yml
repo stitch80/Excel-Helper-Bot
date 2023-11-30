@@ -64,4 +64,5 @@ jobs:
       - name: Test
         run: |
           ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@18.141.194.145 'sudo chmod 750 /usr/local/bin/healthcheck.sh'
+          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@18.141.194.145 'sudo pwd'
           ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@18.141.194.145 'sudo /usr/local/bin/healthcheck.sh bot_container 60'
