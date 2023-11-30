@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  excel-helper-bot:
+    image: stitch80/excelhelperbot
+    networks:
+      - bot-network
+    ports:
+      - 80:8080
+
+networks:
+  bot-network:
