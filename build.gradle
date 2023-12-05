@@ -28,7 +28,6 @@ dependencies {
     }
     implementation('org.apache.poi:poi:5.2.2')
     implementation('org.apache.poi:poi-ooxml:5.2.3')
-    implementation('org.jxls:jxls-jexcel:1.0.9')
     implementation('org.dhatim:fastexcel-reader:0.15.6')
     implementation('org.dhatim:fastexcel:0.15.6')
     implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -45,3 +44,9 @@ tasks.named('bootBuildImage') {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+//test {
+//    testLogging {
+//        events "failed", "passed", "skipped", "standardError", "standardOut", "started"
+//    }
+//}

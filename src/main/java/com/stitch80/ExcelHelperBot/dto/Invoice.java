@@ -4,7 +4,6 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.apache.commons.lang3.EnumUtils;
 
 @Getter
 @Setter
@@ -31,9 +30,11 @@ public class Invoice {
 
     public void checkIfInvoiceIsCompleted() {
         if (isCompleted()) {
-            setStatus("COMPLETED");
+//            setStatus("COMPLETED");
+            setStatus(InvoiceStatus.COMPLETED);
         } else {
-            setStatus("CREATION");
+//            setStatus("CREATION");
+            setStatus(InvoiceStatus.CREATION);
         }
     }
 
@@ -57,6 +58,9 @@ public class Invoice {
                     .append("Invoice number: need to fill invoice date /")
                     .append(getInvNo())
                     .append("\n");
+        } else {
+            output
+                    .append("Invoice number: need to fill invoice date / need to fill Invoice number\n");
         }
         if (getInvDate() != null && !getInvDate().isBlank()) {
             output
@@ -91,43 +95,38 @@ public class Invoice {
     }
 
 
-    public void setStatus(String status) {
-        if (EnumUtils.isValidEnum(InvoiceStatus.class, status)) {
-            invoiceStatus = EnumUtils.getEnum(InvoiceStatus.class, status);
-        }
+//    public void setStatus(String status) {
+//        if (EnumUtils.isValidEnum(InvoiceStatus.class, status)) {
+//            invoiceStatus = EnumUtils.getEnum(InvoiceStatus.class, status);
+//        }
+//    }
+
+    public void setStatus(InvoiceStatus status) {
+        invoiceStatus = status;
     }
 
-    @Override
-    public String toString() {
-        return "InvoiceDTO{" +
-                "year='" + year + '\'' +
-                ", invNo=" + invNo +
-                ", invDate='" + invDate + '\'' +
-                ", customerName='" + customerName + '\'' +
-                ", amount=" + amount +
-                ", invoiceStatus=" + invoiceStatus +
-                '}';
-    }
 
-    @Getter
-    private enum InvoiceStatus {
-        CREATION("Creation"),
-        YEAR("Year of invoice"),
-        INV_NO("Invoice number"),
-        INV_DATE("Invoice Date"),
-        CUSTOMER_NAME("Customer Name"),
-        AMOUNT("Invoice Amount"),
-        COMPLETED("Invoice Completed");
+//    @Override
+//    public String toString() {
+//        return "InvoiceDTO{" +
+//                "year='" + year + '\'' +
+//                ", invNo=" + invNo +
+//                ", invDate='" + invDate + '\'' +
+//                ", customerName='" + customerName + '\'' +
+//                ", amount=" + amount +
+//                ", invoiceStatus=" + invoiceStatus +
+//                '}';
+//    }
 
-        private String status;
-
-        InvoiceStatus(String status) {
-            this.setStatus(status);
-        }
-
-        public void setStatus(String status) {
-            this.status = status;
-        }
+    //    @Getter
+    public enum InvoiceStatus {
+        CREATION,
+        //        YEAR,
+        INV_NO,
+        //        INV_DATE,
+        CUSTOMER_NAME,
+        AMOUNT,
+        COMPLETED
     }
 }
 

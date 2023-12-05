@@ -6,6 +6,7 @@ import com.stitch80.ExcelHelperBot.components.bot.senders.DocumentSender;
 import com.stitch80.ExcelHelperBot.components.bot.senders.InlineKeyboardSender;
 import com.stitch80.ExcelHelperBot.components.bot.senders.ReplyKeyboardSender;
 import com.stitch80.ExcelHelperBot.components.bot.senders.TextSender;
+import com.stitch80.ExcelHelperBot.dto.Invoice;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Message;
@@ -43,6 +44,7 @@ public class MessageController {
         User user = message.getFrom();
 
         processKeyboardInput(excelHelperBot, message, user);
+
     }
 
 
@@ -61,7 +63,8 @@ public class MessageController {
                         For example: 015
                         """;
                 textSender.sendText(userId, text, excelHelperBot);
-                invoices.setStatus("INV_NO", userId);
+//                invoices.setStatus("INV_NO", userId);
+                invoices.setStatus(Invoice.InvoiceStatus.INV_NO, userId);
                 break;
             case "Invoice Date":
                 inlineKeyboardSender.sendMonthMenuKeyboard(user, excelHelperBot, LocalDate.now());
@@ -72,7 +75,8 @@ public class MessageController {
                         For example: Angeline Jolie
                         """;
                 textSender.sendText(userId, text, excelHelperBot);
-                invoices.setStatus("CUSTOMER_NAME", userId);
+//                invoices.setStatus("CUSTOMER_NAME", userId);
+                invoices.setStatus(Invoice.InvoiceStatus.CUSTOMER_NAME, userId);
                 break;
             case "Amount":
                 text = """
@@ -80,7 +84,8 @@ public class MessageController {
                         For example: 10000
                         """;
                 textSender.sendText(userId, text, excelHelperBot);
-                invoices.setStatus("AMOUNT", userId);
+//                invoices.setStatus("AMOUNT", userId);
+                invoices.setStatus(Invoice.InvoiceStatus.AMOUNT, userId);
                 break;
             case "Get Invoice":
                 if (invoices.userInvoiceIsCompleted(userId)) {
@@ -96,14 +101,18 @@ public class MessageController {
                 break;
             default:
 
-                processUserInput(message, user, excelHelperBot);
+                try {
+                    processUserInput(message, user, excelHelperBot);
+                } catch (RuntimeException re) {
+                    textSender.sendText(userId, re.getMessage() + "\nTry again!", excelHelperBot);
+                }
 
                 break;
         }
     }
 
 
-    private void processUserInput(Message message, User user, ExcelHelperBot excelHelperBot) {
+    private void processUserInput(Message message, User user, ExcelHelperBot excelHelperBot) throws RuntimeException {
         Long userId = user.getId();
         String messageText = message.getText();
         switch (invoices.getInvoiceStatus(userId)) {
@@ -116,7 +125,7 @@ public class MessageController {
                 replyKeyboardSender.sendInvoiceStatusAndInvoiceMenu(user, excelHelperBot);
                 break;
             case "AMOUNT":
-                invoices.setAmount(Double.parseDouble(messageText), userId);
+                invoices.setAmount(messageText, userId);
                 replyKeyboardSender.sendInvoiceStatusAndInvoiceMenu(user, excelHelperBot);
                 break;
         }

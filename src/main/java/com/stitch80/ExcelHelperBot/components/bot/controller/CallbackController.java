@@ -41,32 +41,46 @@ public class CallbackController {
         if (callbackMessage.contains(MonthMenuKeyboard.CONTROL_MONTH)) {
             inlineKeyboardSender.switchMonthMenu(callback, excelHelperBot, localDate);
         } else if (callbackMessage.contains(YearMenuKeyboard.CONTROL_YEAR)) {
-            if (callbackMessage.contains("start_")) {
-                inlineKeyboardSender.clearMenu(callback, excelHelperBot);
-                inlineKeyboardSender.deleteMessage(callback, excelHelperBot);
-                inlineKeyboardSender.sendYearMenuKeyboard(callback, excelHelperBot, localDate);
-            } else {
-                inlineKeyboardSender.switchYearMenu(callback, excelHelperBot, localDate);
-            }
+            sendYearMenu(excelHelperBot, callbackMessage, callback, localDate);
         } else if (callbackMessage.contains(QuarterCenturyMenuKeyboard.CONTROL_QUARTER_CENTURY)) {
-            if (callbackMessage.contains("start_")) {
-                inlineKeyboardSender.clearMenu(callback, excelHelperBot);
-                inlineKeyboardSender.deleteMessage(callback, excelHelperBot);
-                inlineKeyboardSender.sendYearRangeMenuKeyboard(callback, excelHelperBot, localDate);
-
-            } else {
-                inlineKeyboardSender.switchYearRangeMenu(callback, excelHelperBot, localDate);
-            }
+            sendYearRangeMenu(excelHelperBot, callbackMessage, callback, localDate);
         } else {
-            inlineKeyboardSender.clearMenu(callback, excelHelperBot);
-            inlineKeyboardSender.deleteMessage(callback, excelHelperBot);
-            Long userId = user.getId();
-            invoices.setInvDate(callbackMessage, userId);
-            invoices.setYear(callbackMessage.substring(0, 4), userId);
+            clearMenuForNextMenu(excelHelperBot, callback);
+            saveInvoiceDate(user, callbackMessage);
             replyKeyboardSender.sendInvoiceStatusAndInvoiceMenu(user, excelHelperBot);
 
 
         }
+    }
+
+    private void saveInvoiceDate(User user, String callbackMessage) {
+        Long userId = user.getId();
+        invoices.setInvDate(callbackMessage, userId);
+        invoices.setYear(callbackMessage.substring(0, 4), userId);
+    }
+
+    private void sendYearRangeMenu(ExcelHelperBot excelHelperBot, String callbackMessage, CallbackQuery callback, LocalDate localDate) {
+        if (callbackMessage.contains("start_")) {
+            clearMenuForNextMenu(excelHelperBot, callback);
+            inlineKeyboardSender.sendYearRangeMenuKeyboard(callback, excelHelperBot, localDate);
+
+        } else {
+            inlineKeyboardSender.switchYearRangeMenu(callback, excelHelperBot, localDate);
+        }
+    }
+
+    private void sendYearMenu(ExcelHelperBot excelHelperBot, String callbackMessage, CallbackQuery callback, LocalDate localDate) {
+        if (callbackMessage.contains("start_")) {
+            clearMenuForNextMenu(excelHelperBot, callback);
+            inlineKeyboardSender.sendYearMenuKeyboard(callback, excelHelperBot, localDate);
+        } else {
+            inlineKeyboardSender.switchYearMenu(callback, excelHelperBot, localDate);
+        }
+    }
+
+    private void clearMenuForNextMenu(ExcelHelperBot excelHelperBot, CallbackQuery callback) {
+        inlineKeyboardSender.clearMenu(callback, excelHelperBot);
+        inlineKeyboardSender.deleteMessage(callback, excelHelperBot);
     }
 
     private LocalDate getDateFromCallback(CallbackQuery callbackQuery) {
