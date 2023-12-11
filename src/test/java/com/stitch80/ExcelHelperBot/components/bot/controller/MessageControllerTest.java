@@ -24,7 +24,6 @@ import static org.mockito.Mockito.*;
 public class MessageControllerTest {
 
     public static final long USER_ID = 1001L;
-    //    @Captor
     ArgumentCaptor<String> textToSendCaptor = ArgumentCaptor.forClass(String.class);
     ArgumentCaptor<Long> userIdCaptor = ArgumentCaptor.forClass(Long.class);
     ArgumentCaptor<ExcelHelperBot> botCaptor = ArgumentCaptor.forClass(ExcelHelperBot.class);
@@ -238,6 +237,7 @@ public class MessageControllerTest {
         verify(inlineKeyboardSender).sendMonthMenuKeyboard(user, excelHelperBot, LocalDate.now());
     }
 
+    //region <Test getting document>
     @Test
     void invoiceGetCompletedDocument() {
         createNewInvoice();
@@ -278,5 +278,6 @@ public class MessageControllerTest {
         verify(documentSender, never()).sendInvoiceDocument(user, invoices, excelHelperBot);
 
     }
+    //endregion
 
 }

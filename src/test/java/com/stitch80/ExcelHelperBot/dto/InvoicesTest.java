@@ -1,6 +1,6 @@
-package com.stitch80.ExcelHelperBot.components;
+package com.stitch80.ExcelHelperBot.dto;
 
-import com.stitch80.ExcelHelperBot.dto.Invoice;
+import com.stitch80.ExcelHelperBot.components.Invoices;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
