@@ -67,6 +67,7 @@ class CallbackControllerTest {
         verify(replyKeyboardSender, never()).sendInvoiceStatusAndInvoiceMenu(user, excelHelperBot);
     }
 
+    //region <Year Menu>
     @Test
     void sendYearMenu() {
         when(callbackQuery.getData()).thenReturn(YearMenuKeyboard.CONTROL_YEAR + "start_2023");
@@ -108,7 +109,9 @@ class CallbackControllerTest {
         verify(invoices, never()).setYear(LocalDate.now().toString().substring(0, 4), user.getId());
         verify(replyKeyboardSender, never()).sendInvoiceStatusAndInvoiceMenu(user, excelHelperBot);
     }
+    //endregion
 
+    //region <Year Range Menu>
     @Test
     void sendYearRangeMenu() {
         when(callbackQuery.getData()).thenReturn(QuarterCenturyMenuKeyboard.CONTROL_QUARTER_CENTURY + "start_2023");
@@ -151,6 +154,7 @@ class CallbackControllerTest {
         verify(invoices, never()).setYear(LocalDate.now().toString().substring(0, 4), user.getId());
         verify(replyKeyboardSender, never()).sendInvoiceStatusAndInvoiceMenu(user, excelHelperBot);
     }
+    //endregion
 
     @Test
     void saveInvoiceDate() {
