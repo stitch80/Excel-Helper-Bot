@@ -4,6 +4,7 @@ import com.stitch80.excelhelperbot.components.Invoices;
 import com.stitch80.excelhelperbot.components.bot.ExcelHelperBot;
 import com.stitch80.excelhelperbot.components.fileprocessor.InvoiceProcessor;
 import com.stitch80.excelhelperbot.dto.Invoice;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import java.io.*;
 import java.time.LocalDate;
 
 @Service
+@Slf4j
 public class DocumentSender {
 
 
@@ -59,7 +61,9 @@ public class DocumentSender {
         sendDocumentRequest.setCaption(fileName);
         try {
             excelHelperBot.execute(sendDocumentRequest);
-            file.delete();
+            if (!file.delete()) {
+                log.error("File " + file.getName() + " wasn't deleted. Check the issue");
+            }
         } catch (TelegramApiException e) {
             throw new RuntimeException(e);
         }
