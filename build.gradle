@@ -27,7 +27,7 @@ dependencies {
         exclude group: 'commons-logging', module: 'commons-logging'
     }
     implementation('org.apache.poi:poi:5.2.2')
-    implementation('org.apache.poi:poi-ooxml:5.2.3')
+    implementation('org.apache.poi:poi-ooxml:5.2.5')
     implementation('org.dhatim:fastexcel-reader:0.15.6')
     implementation('org.dhatim:fastexcel:0.15.6')
     implementation 'org.springframework.boot:spring-boot-starter-web'
