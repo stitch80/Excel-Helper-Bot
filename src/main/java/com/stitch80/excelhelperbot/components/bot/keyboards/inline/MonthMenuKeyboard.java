@@ -54,7 +54,7 @@ public class MonthMenuKeyboard {
                 .keyboardRow(weekDaysRow);
 
         LocalDate firstDayOfMonth = LocalDate.of(localDate.getYear(), localDate.getMonth(), 1);
-        int lastDayOfMonth = localDate.getMonth().maxLength();
+        int lastDayOfMonth = localDate.getMonth().length(localDate.isLeapYear());
         int firstDayOfMonthWeekDayNumber = firstDayOfMonth.getDayOfWeek().getValue() - 1;
         int numberOfWeeks = (int) Math.ceil((lastDayOfMonth - (7 - firstDayOfMonthWeekDayNumber)) / 7.0) + 1;
 
